@@ -1,9 +1,6 @@
-PS C:\Users\egzamin\IdeaProjects\zgadywanka> git config --local user.name "SzymonKraj"
-fatal: --local can only be used inside a git repository
-PS C:\Users\egzamin\IdeaProjects\zgadywanka> git config --local user.email "szymdziekk@gmail.com"
-fatal: --local can only be used inside a git repository
-PS C:\Users\egzamin\IdeaProjects\zgadywanka> git init
-Initialized empty Git repository in C:/Users/egzamin/IdeaProjects/zgadywanka/.git/
-PS C:\Users\egzamin\IdeaProjects\zgadywanka> git add .
-warning: in the working copy of 'src/Main.java', LF will be replaced by CRLF the next time Git touches it
-PS C:\Users\egzamin\IdeaProjects\zgadywanka> git commit -m "pusty projekt"
+git config --local user.name "SzymonKraj"
+git config --local user.email "szymdziekk@gmail.com"
+git init
+git add .
+git commit -m "pusty projekt"
+git push
