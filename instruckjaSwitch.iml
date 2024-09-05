@@ -42,5 +42,14 @@ public class Main {
             default:
                 System.out.println("sprobuj innym razem");
         }
+//wyrazenie switch //
+        System.out.println(
+                switch (roznica){
+                    case 0 -> "brawo";
+                        case 1 -> "bardzo blisko";
+                            case 2 -> "dosc blisko";
+                                default -> "slabo";
+                }
+        );
     }
 }
