@@ -18,5 +18,11 @@ public class Main {
         Scanner klawiatura = new Scanner(System.in);
         int wpisanaliczba = klawiatura.nextInt(); /* wczytywanie */
         System.out.println("wpisana z klawiatry " + wpisanaliczba);
+
+        if(wpisanaliczba == wylosowana){
+            System.out.println("udalo ci sie ");
+        } else{
+            System.out.println("nie udalo ci sie ");
+        }
     }
 }
