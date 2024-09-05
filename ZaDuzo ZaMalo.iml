@@ -65,5 +65,21 @@ public class Main {
                 }
             }
         }
+        // zgadywanie do skutku
+        System.out.println("zgadnij liczbe");
+        wpisanaliczba = klawiatura.nextInt();
+        while (wpisanaliczba != wylosowana){
+            if (wpisanaliczba == wylosowana){
+                System.out.println("wygrana");
+                break;
+            } else{
+                if(wpisanaliczba>wylosowana){
+                    System.out.println("wpisano za duzo");
+                } else{
+                    System.out.println("Wpisano za malo");
+                }
+            }
+        }
+        }
     }
 }
