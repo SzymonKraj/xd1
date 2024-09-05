@@ -22,7 +22,9 @@ public class Main {
         if(wpisanaliczba == wylosowana){
             System.out.println("udalo ci sie ");
         } else{
-            System.out.println("nie udalo ci sie ");
+            System.out.println("nie udalo ci sie "); /* warunkowe cos tam xd  */
         }
+        String komunikat = (wylosowana == wpisanaliczba) ? "poprawnie" : "niepoprawnie";
+        System.out.println(komunikat); /* wyrazenie warunkowe */
     }
 }
