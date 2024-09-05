@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("JD");
+        int wylosowana = (int)(Math.random()*10+1);
+                System.out.println(wylosowana);
+        /*
+        typy proste zawsze z małej litery, mają tylko wartość
+        logiczny: boolean
+        całkowite: byte, short, int, long
+        rzeczywiste: float, double,
+        znakowy: char
+
+        typy złożone zawsze z dużej litery obiekty które mają własnośći i metody
+         */
+        System.out.println("Zgadnij liczbe z zakresu od 1 do 10");
+        Scanner klawiatura = new Scanner(System.in);
+        int wpisanaliczba = klawiatura.nextInt(); /* wczytywanie */
+        System.out.println("wpisana z klawiatry " + wpisanaliczba);
+
+        if(wpisanaliczba == wylosowana){
+            System.out.println("udalo ci sie ");
+        } else{
+            System.out.println("nie udalo ci sie "); /* warunkowe cos tam xd  */
+        }
+        String komunikat = (wylosowana == wpisanaliczba) ? "poprawnie" : "niepoprawnie";
+        System.out.println(komunikat); /* wyrazenie warunkowe */
+
+        int roznica = wylosowana>wpisanaliczba ? wylosowana - wpisanaliczba:wpisanaliczba - wylosowana;
+        roznica = roznica/10; //dzielenie calkowite do wynik typu int
+        switch (roznica){
+                case 0:
+                    System.out.println("brawo");
+                break;
+                case 1:
+                    System.out.println("bardzo blisko");
+                break;
+            case 2:
+                System.out.println("dosc blisko");
+                break;
+            default:
+                System.out.println("sprobuj innym razem");
+        }
+    }
+}
