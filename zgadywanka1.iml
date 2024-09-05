@@ -1,0 +1,22 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("JD");
+        int wylosowana = (int)(Math.random()*10+1);
+                System.out.println(wylosowana);
+        /*
+        typy proste zawsze z małej litery, mają tylko wartość
+        logiczny: boolean
+        całkowite: byte, short, int, long
+        rzeczywiste: float, double,
+        znakowy: char
+
+        typy złożone zawsze z dużej litery obiekty które mają własnośći i metody
+         */
+        System.out.println("Zgadnij liczbe z zakresu od 1 do 10");
+        Scanner klawiatura = new Scanner(System.in);
+        int wpisanaliczba = klawiatura.nextInt(); /* wczytywanie */
+        System.out.println("wpisana z klawiatry " + wpisanaliczba);
+    }
+}
