@@ -1,0 +1,26 @@
+public class Osoba {
+    //https://github.com/Technikum-TEB-Edukacja-we-Wroclawiu/INF.04-rozwiazania/blob/main/_arkusze/2022-06/inf_04_2022_06_02_SG_kolor.pdf
+
+
+    private  int idOsoby;
+    private String imieOsoby;
+    public static int licznikInstancji = 0;
+
+    public Osoba() {
+        idOsoby = 0;
+        imieOsoby = "";
+        licznikInstancji++;
+    }
+
+    public Osoba(Osoba osoba) {
+        this.idOsoby = osoba.idOsoby;
+        this.imieOsoby = osoba.imieOsoby;
+    }
+    public void wypiszImie (String arguemnt){
+        if(imieOsoby == ""){
+            System.out.println("brak danych");
+        }else{
+            System.out.println("czesc"+arguemnt+"mam na imie"+imieOsoby);
+        }
+    }
+}
