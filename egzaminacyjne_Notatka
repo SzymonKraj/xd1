@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Notatka nowaNotatka = new Notatka("do egzaminu pracuj","przygotowanie");
+        Notatka nowaNotatka2 = new Notatka("tralalala","costam");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("wpisz tytul");
+        String tytul = scanner.nextLine();
+        System.out.println("wpisz tresc");
+        String tresc = scanner.nextLine();
+        System.out.println("Notatka: " + nowaNotatka2);
+        nowaNotatka.wyswietl();
+        nowaNotatka.wypisz();
+        nowaNotatka2.wypisz();
+        nowaNotatka2.wyswietl();
+    }
+}
+
+
+
+
+public class Notatka {
+    private static int licznik = 0;
+    private static int  id;
+    protected String trescNotatki;
+    protected String tytulNotatki;
+
+
+    public Notatka(String trescNotatki, String tytulNotatki) {
+        licznik++;
+        id = licznik;
+        this.trescNotatki = trescNotatki;
+        this.tytulNotatki = tytulNotatki;
+    }
+
+
+    public void wyswietl(){
+        System.out.println("tytul " + tytulNotatki);
+        System.out.println("tresc " + trescNotatki);
+    }
+    public void wypisz(){
+        System.out.println(tytulNotatki + ";" + trescNotatki + ";" + licznik);
+    }
+
+}
