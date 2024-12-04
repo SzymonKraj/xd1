@@ -1,0 +1,188 @@
+1. Aplikacja z Listą wyboru (ComboBox)
+
+Aplikacja z ComboBox, która pozwala użytkownikowi wybrać element z listy.
+
+<Window x:Class="ComboBoxExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ComboBox Example" Height="200" Width="300">
+    <Grid>
+        <ComboBox Name="comboBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+            <ComboBoxItem>Option 1</ComboBoxItem>
+            <ComboBoxItem>Option 2</ComboBoxItem>
+            <ComboBoxItem>Option 3</ComboBoxItem>
+        </ComboBox>
+        <Button Content="Show Selected" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10" Click="Button_Click"/>
+    </Grid>
+</Window>
+
+W C#: ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+private void Button_Click(object sender, RoutedEventArgs e)
+{
+    string selectedOption = comboBox.SelectedItem as ComboBoxItem;
+    MessageBox.Show($"You selected: {selectedOption.Content}");
+}
+
+2. Aplikacja z ListView (Lista elementów)
+
+Aplikacja z ListView, która wyświetla listę elementów i pozwala na zaznaczenie.
+
+<Window x:Class="ListViewExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ListView Example" Height="250" Width="300">
+    <Grid>
+        <ListView Name="listView" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <ListViewItem>Item 1</ListViewItem>
+            <ListViewItem>Item 2</ListViewItem>
+            <ListViewItem>Item 3</ListViewItem>
+        </ListView>
+        <Button Content="Show Selected" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="Button_Click"/>
+    </Grid>
+</Window>
+
+W C#: ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+private void Button_Click(object sender, RoutedEventArgs e)
+{
+    var selectedItem = listView.SelectedItem;
+    MessageBox.Show($"You selected: {selectedItem}");
+}
+
+3. Aplikacja z Sliderem (Zmiana wartości)
+
+Aplikacja z Sliderem, który pozwala na zmianę wartości liczbowej.
+
+<Window x:Class="SliderExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Slider Example" Height="200" Width="300">
+    <Grid>
+        <Slider Name="slider" Minimum="0" Maximum="100" Value="50" Width="200" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBlock Name="textBlock" Text="50" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Content="Show Value" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="Button_Click"/>
+    </Grid>
+</Window>
+
+W C#: ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+private void Button_Click(object sender, RoutedEventArgs e)
+{
+    textBlock.Text = slider.Value.ToString();
+}
+
+4. Aplikacja z TextBox (Wpisywanie tekstu)
+
+Aplikacja z TextBox, która pozwala użytkownikowi wpisać tekst i go wyświetlić.
+
+<Window x:Class="TextBoxExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TextBox Example" Height="200" Width="300">
+    <Grid>
+        <TextBox Name="textBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200"/>
+        <Button Content="Show Text" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="Button_Click"/>
+    </Grid>
+</Window>
+
+W C#: ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+private void Button_Click(object sender, RoutedEventArgs e)
+{
+    MessageBox.Show($"You entered: {textBox.Text}");
+}
+
+5. Aplikacja z przyciskiem (Zmiana koloru)
+
+Aplikacja, która zmienia kolor tła po kliknięciu przycisku.
+
+<Window x:Class="ColorChangeExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Color Change Example" Height="200" Width="300">
+    <Grid Name="grid">
+        <Button Content="Change Color" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click"/>
+    </Grid>
+</Window>
+
+W C#: ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+private void Button_Click(object sender, RoutedEventArgs e)
+{
+    grid.Background = new SolidColorBrush(Colors.LightBlue);
+}
+
+6. Aplikacja z Timerem (Odliczanie czasu)
+
+Aplikacja z Timerem, która odlicza czas i wyświetla upływające sekundy.
+
+<Window x:Class="TimerExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Timer Example" Height="200" Width="300">
+    <Grid>
+        <TextBlock Name="textBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+    </Grid>
+</Window>
+
+W C#: ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+private DispatcherTimer timer;
+private int seconds = 0;
+
+public MainWindow()
+{
+    InitializeComponent();
+    timer = new DispatcherTimer();
+    timer.Interval = TimeSpan.FromSeconds(1);
+    timer.Tick += Timer_Tick;
+    timer.Start();
+}
+
+private void Timer_Tick(object sender, EventArgs e)
+{
+    seconds++;
+    textBlock.Text = $"Time: {seconds} sec";
+}
+
+7. Aplikacja z obrazkiem (Image)
+
+Aplikacja, która wyświetla obrazek i pozwala go zmieniać po kliknięciu.
+
+<Window x:Class="ImageExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Image Example" Height="300" Width="400">
+    <Grid>
+        <Image Name="image" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="200"/>
+        <Button Content="Change Image" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="Button_Click"/>
+    </Grid>
+</Window>
+
+W C#: ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+private void Button_Click(object sender, RoutedEventArgs e)
+{
+    image.Source = new BitmapImage(new Uri("pack://application:,,,/Images/new_image.jpg"));
+}
+
+8. Aplikacja z Oknem Dialogowym (MessageBox)
+
+Aplikacja, która pokazuje okno dialogowe po kliknięciu przycisku.
+
+<Window x:Class="MessageBoxExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MessageBox Example" Height="200" Width="300">
+    <Grid>
+        <Button Content="Show Message" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click"/>
+    </Grid>
+</Window>
+ 
+W C#: ---------------------------------------------------------------------------------------------------------------------------------------------------
+
+private void Button_Click(object sender, RoutedEventArgs e)
+{
+    MessageBox.Show("Hello, this is a message box!");
+}
