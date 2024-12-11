@@ -1,0 +1,275 @@
+1. Prosta galeria z przyciskami "Następny" i "Poprzedni"
+Wyświetla jedno zdjęcie naraz z przyciskami do przewijania zdjęć w lewo i w prawo.
+
+Kod XAML:
+
+xml
+Skopiuj kod
+<Window x:Class="Galeria1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Galeria 1" Height="450" Width="800">
+    <DockPanel>
+        <Button DockPanel.Dock="Left" Click="Poprzedni_Click">Poprzedni</Button>
+        <Image x:Name="Obrazek" Stretch="Uniform" />
+        <Button DockPanel.Dock="Right" Click="Nastepny_Click">Następny</Button>
+    </DockPanel>
+</Window>
+Kod C#:
+
+csharp
+Skopiuj kod
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Media.Imaging;
+
+namespace Galeria1
+{
+    public partial class MainWindow : Window
+    {
+        private List<string> Zdjecia = new List<string> { "img1.jpg", "img2.jpg", "img3.jpg" };
+        private int Indeks = 0;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            WyswietlObraz();
+        }
+
+        private void WyswietlObraz()
+        {
+            Obrazek.Source = new BitmapImage(new Uri(Zdjecia[Indeks], UriKind.Relative));
+        }
+
+        private void Nastepny_Click(object sender, RoutedEventArgs e)
+        {
+            Indeks = (Indeks + 1) % Zdjecia.Count;
+            WyswietlObraz();
+        }
+
+        private void Poprzedni_Click(object sender, RoutedEventArgs e)
+        {
+            Indeks = (Indeks - 1 + Zdjecia.Count) % Zdjecia.Count;
+            WyswietlObraz();
+        }
+    }
+}
+2. Galeria z miniaturkami poniżej głównego obrazu
+Wyświetla główne zdjęcie z paskiem miniaturek poniżej, kliknięcie w miniaturkę zmienia główne zdjęcie.
+
+Kod XAML:
+
+xml
+Skopiuj kod
+<Window x:Class="Galeria2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Galeria 2" Height="450" Width="800">
+    <DockPanel>
+        <Image x:Name="GlownyObrazek" Stretch="Uniform" DockPanel.Dock="Top" Height="300" />
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+            <Image Source="img1.jpg" Width="100" Height="100" Margin="5" MouseDown="Miniaturka_Click" />
+            <Image Source="img2.jpg" Width="100" Height="100" Margin="5" MouseDown="Miniaturka_Click" />
+            <Image Source="img3.jpg" Width="100" Height="100" Margin="5" MouseDown="Miniaturka_Click" />
+        </StackPanel>
+    </DockPanel>
+</Window>
+Kod C#:
+
+csharp
+Skopiuj kod
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+
+namespace Galeria2
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            GlownyObrazek.Source = new BitmapImage(new Uri("img1.jpg", UriKind.Relative));
+        }
+
+        private void Miniaturka_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (sender is Image miniaturka)
+            {
+                GlownyObrazek.Source = miniaturka.Source;
+            }
+        }
+    }
+}
+3. Automatyczna zmiana obrazów (slideshow)
+Obrazy zmieniają się automatycznie co kilka sekund.
+
+Kod XAML:
+
+xml
+Skopiuj kod
+<Window x:Class="Galeria3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Galeria 3" Height="450" Width="800">
+    <Grid>
+        <Image x:Name="Slideshow" Stretch="Uniform" />
+    </Grid>
+</Window>
+Kod C#:
+
+csharp
+Skopiuj kod
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+
+namespace Galeria3
+{
+    public partial class MainWindow : Window
+    {
+        private List<string> Zdjecia = new List<string> { "img1.jpg", "img2.jpg", "img3.jpg" };
+        private int Indeks = 0;
+        private DispatcherTimer Timer;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            Timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(3)
+            };
+            Timer.Tick += (s, e) => NastepnyObraz();
+            Timer.Start();
+            NastepnyObraz();
+        }
+
+        private void NastepnyObraz()
+        {
+            Slideshow.Source = new BitmapImage(new Uri(Zdjecia[Indeks], UriKind.Relative));
+            Indeks = (Indeks + 1) % Zdjecia.Count;
+        }
+    }
+}
+4. Galeria ze sliderem (przewijanie zdjęć)
+Slider pozwala użytkownikowi przeglądać zdjęcia.
+
+Kod XAML:
+
+xml
+Skopiuj kod
+<Window x:Class="Galeria4.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Galeria 4" Height="450" Width="800">
+    <DockPanel>
+        <Slider x:Name="Przewijanie" Minimum="0" Maximum="2" ValueChanged="Przewijanie_ValueChanged" DockPanel.Dock="Bottom" />
+        <Image x:Name="Zdjecie" Stretch="Uniform" />
+    </DockPanel>
+</Window>
+Kod C#:
+
+csharp
+Skopiuj kod
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Media.Imaging;
+
+namespace Galeria4
+{
+    public partial class MainWindow : Window
+    {
+        private List<string> Zdjecia = new List<string> { "img1.jpg", "img2.jpg", "img3.jpg" };
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            WyswietlObraz((int)Przewijanie.Value);
+        }
+
+        private void Przewijanie_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            WyswietlObraz((int)e.NewValue);
+        }
+
+        private void WyswietlObraz(int indeks)
+        {
+            Zdjecie.Source = new BitmapImage(new Uri(Zdjecia[indeks], UriKind.Relative));
+        }
+    }
+}
+
+
+
+5. Galeria ze zdjęciami wybieranymi z ComboBox
+Kod XAML:
+
+xml
+Skopiuj kod
+<Window x:Class="Galeria5.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Galeria z ComboBox" Height="450" Width="800">
+    <DockPanel>
+        <!-- Panel z ComboBox -->
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10">
+            <TextBlock Text="Wybierz zdjęcie: " VerticalAlignment="Center" Margin="5" />
+            <ComboBox x:Name="ComboBoxZdjecia" SelectionChanged="ComboBoxZdjecia_SelectionChanged" Width="200" />
+        </StackPanel>
+
+        <!-- Wyświetlanie obrazu -->
+        <Image x:Name="Obrazek" Stretch="Uniform" Margin="10" />
+    </DockPanel>
+</Window>
+Kod C#:
+
+csharp
+Skopiuj kod
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+
+namespace Galeria5
+{
+    public partial class MainWindow : Window
+    {
+        private Dictionary<string, string> Zdjecia = new Dictionary<string, string>
+        {
+            { "Zdjęcie 1", "img1.jpg" },
+            { "Zdjęcie 2", "img2.jpg" },
+            { "Zdjęcie 3", "img3.jpg" },
+            { "Zdjęcie 4", "img4.jpg" }
+        };
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            WypelnijComboBox();
+        }
+
+        private void WypelnijComboBox()
+        {
+            foreach (var zdjecie in Zdjecia.Keys)
+            {
+                ComboBoxZdjecia.Items.Add(zdjecie);
+            }
+            ComboBoxZdjecia.SelectedIndex = 0; // Ustawienie domyślnego wyboru
+        }
+
+        private void ComboBoxZdjecia_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string wybraneZdjecie = ComboBoxZdjecia.SelectedItem as string;
+            if (wybraneZdjecie != null && Zdjecia.ContainsKey(wybraneZdjecie))
+            {
+                Obrazek.Source = new BitmapImage(new Uri(Zdjecia[wybraneZdjecie], UriKind.Relative));
+            }
+        }
+    }
+}

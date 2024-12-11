@@ -1,0 +1,240 @@
+1. Galeria zdjęć z filtrem po kategoriach
+
+XAML (MainWindow.xaml):
+
+<Window x:Class="PhotoGallery.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Galeria zdjęć" Height="450" Width="800">
+    <Grid>
+        <ComboBox Name="categoryComboBox" VerticalAlignment="Top" Margin="10,10,10,0" SelectionChanged="CategoryComboBox_SelectionChanged">
+            <ComboBoxItem Content="Krajobrazy"/>
+            <ComboBoxItem Content="Zwierzęta"/>
+            <ComboBoxItem Content="Portrety"/>
+        </ComboBox>
+
+        <ListView Name="photoListView" Margin="10,50,10,10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Zdjęcie" DisplayMemberBinding="{Binding Path=ImagePath}" Width="100"/>
+                    <GridViewColumn Header="Opis" DisplayMemberBinding="{Binding Path=Description}" Width="300"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
+
+C# (MainWindow.xaml.cs):
+
+using System.Collections.Generic;
+using System.Windows;
+
+namespace PhotoGallery
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void CategoryComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            string selectedCategory = (categoryComboBox.SelectedItem as System.Windows.Controls.ComboBoxItem).Content.ToString();
+            LoadPhotosByCategory(selectedCategory);
+        }
+
+        private void LoadPhotosByCategory(string category)
+        {
+            List<Photo> photos = new List<Photo>();
+
+            // Przykładowe zdjęcia, można zastąpić prawdziwymi ścieżkami.
+            if (category == "Krajobrazy")
+            {
+                photos.Add(new Photo { ImagePath = "landscape1.jpg", Description = "Krajobraz 1" });
+                photos.Add(new Photo { ImagePath = "landscape2.jpg", Description = "Krajobraz 2" });
+            }
+            else if (category == "Zwierzęta")
+            {
+                photos.Add(new Photo { ImagePath = "animal1.jpg", Description = "Zwierzę 1" });
+                photos.Add(new Photo { ImagePath = "animal2.jpg", Description = "Zwierzę 2" });
+            }
+            else if (category == "Portrety")
+            {
+                photos.Add(new Photo { ImagePath = "portrait1.jpg", Description = "Portret 1" });
+                photos.Add(new Photo { ImagePath = "portrait2.jpg", Description = "Portret 2" });
+            }
+
+            photoListView.ItemsSource = photos;
+        }
+    }
+
+    public class Photo
+    {
+        public string ImagePath { get; set; }
+        public string Description { get; set; }
+    }
+}
+
+2. Galeria zdjęć z oceną (RadioButton)
+
+XAML (MainWindow.xaml):
+
+<Window x:Class="PhotoRating.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ocena zdjęcia" Height="350" Width="525">
+    <Grid>
+        <Image Name="photoImage" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,10,10,0" Width="300" Height="200"/>
+        <TextBlock Name="photoDescription" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,220,10,0" Text="Opis zdjęcia" TextAlignment="Center"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10,0,10,10">
+            <RadioButton Content="1 ★" Name="rating1" GroupName="rating" Margin="5"/>
+            <RadioButton Content="2 ★" Name="rating2" GroupName="rating" Margin="5"/>
+            <RadioButton Content="3 ★" Name="rating3" GroupName="rating" Margin="5"/>
+            <RadioButton Content="4 ★" Name="rating4" GroupName="rating" Margin="5"/>
+            <RadioButton Content="5 ★" Name="rating5" GroupName="rating" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>
+
+C# (MainWindow.xaml.cs):
+
+using System.Windows;
+
+namespace PhotoRating
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            LoadPhoto("image1.jpg", "Opis zdjęcia");
+        }
+
+        private void LoadPhoto(string imagePath, string description)
+        {
+            photoImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(imagePath, UriKind.Relative));
+            photoDescription.Text = description;
+        }
+    }
+}
+
+3. Slajd pokaz z automatycznym przewijaniem
+
+XAML (MainWindow.xaml):
+
+<Window x:Class="SlideshowApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Slideshow" Height="450" Width="800">
+    <Grid>
+        <Image Name="slideshowImage" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Content="Start" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,50" Click="StartButton_Click"/>
+    </Grid>
+</Window>
+
+C# (MainWindow.xaml.cs):
+
+using System;
+using System.Windows;
+using System.Windows.Threading;
+
+namespace SlideshowApp
+{
+    public partial class MainWindow : Window
+    {
+        private string[] imagePaths = { "image1.jpg", "image2.jpg", "image3.jpg" };
+        private int currentIndex = 0;
+        private DispatcherTimer timer;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(2); // Zmienia co 2 sekundy
+            timer.Tick += Timer_Tick;
+        }
+
+        private void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            slideshowImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(imagePaths[currentIndex], UriKind.Relative));
+            currentIndex = (currentIndex + 1) % imagePaths.Length; // Przechodzi do następnego zdjęcia, po ostatnim zaczyna od początku
+        }
+    }
+}
+
+4. Galeria zdjęć z możliwością dodawania tagów
+
+XAML (MainWindow.xaml):
+
+<Window x:Class="PhotoGalleryWithTags.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Galeria z tagami" Height="450" Width="800">
+    <Grid>
+        <ListView Name="photoListView" Margin="10,10,10,50">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Zdjęcie" DisplayMemberBinding="{Binding ImagePath}" Width="100"/>
+                    <GridViewColumn Header="Opis" DisplayMemberBinding="{Binding Description}" Width="300"/>
+                    <GridViewColumn Header="Tagi" DisplayMemberBinding="{Binding Tags}" Width="200"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10,0,10,10">
+            <TextBox Name="tagTextBox" Width="200" Margin="5" PlaceholderText="Dodaj tag"/>
+            <Button Content="Dodaj tag" Width="75" Margin="5" Click="AddTagButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
+
+C# (MainWindow.xaml.cs):
+
+using System.Collections.Generic;
+using System.Windows;
+
+namespace PhotoGalleryWithTags
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            LoadPhotos();
+        }
+
+        private void LoadPhotos()
+        {
+            List<Photo> photos = new List<Photo>
+            {
+                new Photo { ImagePath = "image1.jpg", Description = "Krajobraz", Tags = "góry, lato" },
+                new Photo { ImagePath = "image2.jpg", Description = "Zwierzęta", Tags = "kot, domowy" }
+            };
+            photoListView.ItemsSource = photos;
+        }
+
+        private void AddTagButton_Click(object sender, RoutedEventArgs e)
+        {
+            string tag = tagTextBox.Text;
+            if (!string.IsNullOrEmpty(tag))
+            {
+                // Można dodać tag do zdjęcia
+                // Logika dodania tagu do konkretnego zdjęcia
+            }
+        }
+    }
+
+    public class Photo
+    {
+        public string ImagePath { get; set; }
+        public string Description { get; set; }
+        public string Tags { get; set; }
+    }
+}
